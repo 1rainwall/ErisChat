@@ -5,8 +5,6 @@ const userList = document.getElementById('users');
 
 const { username, room } = Qs.parse(location.search, { ignoreQueryPrefix: true });
 
-const io = socketio.connect();
-
 const socket = io();
 
 socket.emit('joinRoom', { username, room });
