@@ -1,11 +1,9 @@
 const chatForm = document.getElementById('chat-form');
 const chatMessages = document.querySelector('.chat-messages');
-const { username, room } = Qs.parse(location.search, { ignoreQueryPrefix: true });
 const roomName = document.getElementById('room-name');
 const userList = document.getElementById('users');
 
-const io = socket('https://eris-chat-git-main-1rainwall.vercel.app');
-
+const { username, room } = Qs.parse(location.search, { ignoreQueryPrefix: true });
 
 
 const socket = io();
@@ -28,7 +26,13 @@ socket.on('message', (message) => {
 chatForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    const msg = e.target.elements.msg.value;
+    let msg = e.target.elements.msg.value;
+
+    msg = msg.trim();
+
+    if (!msg) {
+      return false;
+    }
 
     socket.emit('chatMessage', msg);
 
@@ -55,3 +59,11 @@ function outputUsersName(users){
     ${users.map(user => `<li>${user.username}</li>`).join('')}
     `;
 }
+
+document.getElementById('leave-btn').addEventListener('click', () => {
+    const leaveRoom = confirm('Are you sure you want to leave the chatroom?');
+    if (leaveRoom) {
+      window.location = '../index.html';
+    } else {
+    }
+  });
