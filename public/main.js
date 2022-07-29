@@ -4,6 +4,8 @@ const { username, room } = Qs.parse(location.search, { ignoreQueryPrefix: true }
 const roomName = document.getElementById('room-name');
 const userList = document.getElementById('users');
 
+const io = socket('https://eris-chat-git-main-1rainwall.vercel.app');
+
 
 
 const socket = io();
